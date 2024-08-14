@@ -15,22 +15,18 @@ public class MemberServices {
     @Autowired
     private MemberRepository memberRepository;
 
-    @GetMapping
     public List<Member> getAllMember(){
         return memberRepository.findAll();
     }
 
-    @GetMapping
-    @RequestMapping("{id}")
-    public Member getOneMember(@PathVariable Long id){
+    public Member getOneMember(Long id){
         if(memberRepository.findByMemberId(id)==null){
             throw new GlobalNotFoundException("Member does not exist!");
         }
         return memberRepository.findByMemberId(id);
     }
 
-    @PostMapping
-    public Member createMemberDetails(@RequestBody final Member member) throws Exception {
+    public Member createMemberDetails(Member member) throws Exception {
         try {
             return memberRepository.saveAndFlush(member);
         }catch(Exception e){
@@ -38,8 +34,7 @@ public class MemberServices {
         }
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.PUT)
-    public Member updateMemberDetails(@PathVariable Long id, @RequestBody final Member member){
+    public Member updateMemberDetails(Long id, Member member){
         Member existingMemberDetails=memberRepository.findByMemberId(id);
         if(existingMemberDetails==null){
             throw new GlobalNotFoundException("Member does not exist!");
@@ -48,8 +43,7 @@ public class MemberServices {
         return memberRepository.saveAndFlush(existingMemberDetails);
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
-    public void deleteMemberDetails(@PathVariable Long id){
+    public void deleteMemberDetails(Long id){
         if(memberRepository.findByMemberId(id)==null){
             throw new GlobalNotFoundException("Member does not exist!");
         }

@@ -20,15 +20,11 @@ public class BookServices {
     private AuthorRepository authorRepository;
 
 
-
-    @GetMapping
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
 
-    @GetMapping
-    @RequestMapping("{id}")
-    public Book getOneBook(@PathVariable Long id){
+    public Book getOneBook(Long id){
         if(bookRepository.findByBookId(id)==null){
             throw new GlobalNotFoundException("Book does not exist.");
         }
@@ -36,8 +32,7 @@ public class BookServices {
     }
 
 
-    @PostMapping
-    public Book createBookDetails(@RequestBody final Book book){
+    public Book createBookDetails(Book book){
         Author author=authorRepository.findByAuthorId(book.getAuthor().getAuthorId());
         if(author==null){
             authorRepository.save(book.getAuthor());
@@ -48,8 +43,7 @@ public class BookServices {
 
 
     // Deleting a book using its id
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public String deleteOneBook(@PathVariable Long id){
+    public String deleteOneBook(Long id){
         Book book=bookRepository.findByBookId(id);
         if(book==null){
             return "Book id not found";
@@ -59,8 +53,7 @@ public class BookServices {
     }
 
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Book updateBookDetails(@PathVariable Long id, @RequestBody Book bookDetails) {
+    public Book updateBookDetails(Long id,Book bookDetails) {
         Book existingBookDetails = bookRepository.findById(id).orElseThrow(() -> new GlobalNotFoundException("Book not found"));
         Author author = bookDetails.getAuthor();
         if (author != null) {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -28,6 +29,7 @@ public class ControllerTest {
 
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testCreateAndGetAuthor() throws Exception {
         // Creating an author
         Author author=new Author(null,"John Smith","Nice writer");
@@ -49,6 +51,7 @@ public class ControllerTest {
 
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testDeleteAuthor() throws Exception {
             Author author=new Author(null,"John Smith","Nice writer");
             String response=mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/authors")
@@ -66,6 +69,7 @@ public class ControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testUpdateAuthor() throws Exception{
         // creating a user
         Author author=new Author(null,"Anup","Intern");
@@ -86,4 +90,8 @@ public class ControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Anoop, this name has been changed successfully"));
     }
 }
-
+//---things to consider-----------//
+//Use @WithMockUser to specify user details and roles for your tests.
+//Configure test-specific security settings if necessary.
+//Disable security for tests if the security aspect is not relevant.
+//Ensure that the security context is correctly set up for each test.

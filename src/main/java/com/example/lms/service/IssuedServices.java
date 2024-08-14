@@ -30,9 +30,8 @@ public class IssuedServices {
         return issuedRepository.findAll();
     }
 
-    @GetMapping
-    @RequestMapping("{id}")
-    public Issued getOneIssued(@PathVariable Long id){
+
+    public Issued getOneIssued(Long id){
         if(issuedRepository.findByIssuedId(id)==null){
             throw new GlobalNotFoundException("Issued id does not exist.");
         }
@@ -40,8 +39,7 @@ public class IssuedServices {
     }
 
     // logic can be improved
-    @PostMapping
-    public Issued createIssuedDetails(@RequestBody final Issued issued){
+    public Issued createIssuedDetails(Issued issued){
         Member member=memberRepository.save(issued.getMember());
         issued.setMember(member);
         Book book=bookRepository.save(issued.getBook());
@@ -49,8 +47,7 @@ public class IssuedServices {
         return issuedRepository.saveAndFlush(issued);
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.PUT)
-    public Issued updateIssuedDetails(@PathVariable Long id, @RequestBody final Issued issued){
+    public Issued updateIssuedDetails(Long id,Issued issued){
         if(issuedRepository.findByIssuedId(id)==null){
             throw new GlobalNotFoundException("Issued id does not exist");
         }
@@ -59,8 +56,7 @@ public class IssuedServices {
         return issuedRepository.saveAndFlush(existingIssuedDetails);
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
-    public void deleteIssuedDetails(@PathVariable Long id){
+    public void deleteIssuedDetails(Long id){
         if(issuedRepository.findByIssuedId(id)==null){
             throw new GlobalNotFoundException("Issued id does not exist");
         }

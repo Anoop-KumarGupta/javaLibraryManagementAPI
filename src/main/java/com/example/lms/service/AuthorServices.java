@@ -26,14 +26,13 @@ public class AuthorServices {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @GetMapping
+
     public List<Author> getAllAuthors(){
         return authorRepository.findAll();
     }
 
-    @GetMapping
-    @RequestMapping("{id}")
-    public Author getOneAuthor(@PathVariable Long id){
+
+    public Author getOneAuthor(Long id){
         if(authorRepository.findByAuthorId(id)==null){
             throw new GlobalNotFoundException("Author does exist!");
         }
@@ -41,8 +40,7 @@ public class AuthorServices {
     }
 
     // creating a new author details
-    @PostMapping
-    public Author createAuthorDetails(@RequestBody final Author author) throws Exception {
+    public Author createAuthorDetails(Author author) throws Exception {
         try{
             return authorRepository.saveAndFlush(author);
         }catch(Exception e){
@@ -52,8 +50,7 @@ public class AuthorServices {
 
 
     // Deleting an Author using his id
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public String deleteOneAuthor(@PathVariable Long id){
+    public String deleteOneAuthor(Long id){
         Author author=authorRepository.findByAuthorId(id);
         if(author==null){
             return "author does not exist.";
@@ -63,8 +60,7 @@ public class AuthorServices {
     }
 
     // Searching by id
-    @RequestMapping(value = "{id}",method = RequestMethod.PUT)
-    public AuthorResponeDto updateAuthorDetails(@PathVariable Long id, @RequestBody final AuthorDTO authorDto){
+    public AuthorResponeDto updateAuthorDetails(Long id,AuthorDTO authorDto){
         Author existingAuthorDetails=authorRepository.findByAuthorId(id);
         if(existingAuthorDetails==null){
             throw new GlobalNotFoundException("Author does not exist.");

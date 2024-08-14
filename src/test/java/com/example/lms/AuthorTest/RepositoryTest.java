@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,6 +20,7 @@ public class RepositoryTest {
     private AuthorRepository authorRepository;
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testSaveAndFindAuthor() {
         Author author = new Author(1L,"John Doe","Bad writer");
         authorRepository.save(author);

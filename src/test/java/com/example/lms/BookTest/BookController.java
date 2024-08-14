@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -38,6 +39,7 @@ public class BookController {
     public static String URLPATH="/api/v1/books";
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testCreateAndGetBook() throws Exception{
         Book book=createABookForTesting();
         String response=mockMvc.perform(MockMvcRequestBuilders.post(URLPATH)
@@ -59,6 +61,7 @@ public class BookController {
     }
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testDeleteBook() throws Exception{
         Book book=createABookForTesting();
         String response=mockMvc.perform(MockMvcRequestBuilders.post(URLPATH)
@@ -74,6 +77,7 @@ public class BookController {
     }
 
     @Test
+    @WithMockUser(username = "anoop", roles = {"EMPLOYEE"})
     public void testUpdateBook() throws Exception{
         Book book=createABookForTesting();
         String response=mockMvc.perform(MockMvcRequestBuilders.post(URLPATH)

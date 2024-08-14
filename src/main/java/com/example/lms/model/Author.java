@@ -24,6 +24,4 @@ public class Author {
     @Column(name = "author_bio")
     private String authorBio;
 
-
-
 }

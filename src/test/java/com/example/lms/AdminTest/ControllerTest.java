@@ -3,7 +3,6 @@ package com.example.lms.AdminTest;
 import com.example.lms.controller.AdminController;
 import com.example.lms.dto.AdminDTO;
 import com.example.lms.dto.AdminResponeDto;
-import com.example.lms.errorHandling.GlobalNotFoundException;
 import com.example.lms.model.Admin;
 import com.example.lms.service.AdminServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
